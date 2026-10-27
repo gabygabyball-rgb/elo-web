@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { background: #02010a; }
+body { background: transparent; color: #f5f5f5; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
+.glass { background: rgba(10, 8, 40, 0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.08); }
+
+/* Barra superior */
+.navbar { background: rgba(6, 5, 30, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.07); }
+.brand-text { background: linear-gradient(90deg, #ffffff 0%, #7fd6ff 55%, #00b4ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 12px rgba(0,180,255,.35)); }
+
+/* Fila encontrada con "Mi posición" */
+@keyframes rowflash { 0%, 100% { background: transparent; } 20%, 70% { background: rgba(0,180,255,.28); } }
+.row-flash { animation: rowflash 2.4s ease-out 1; }
+
+/* Botón de Discord llamativo */
+.discord-btn {
+  overflow: hidden;
+  background: linear-gradient(120deg, #5865f2 0%, #7b5cff 45%, #00b4ff 100%);
+  background-size: 220% 220%;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.22) inset, 0 8px 28px -8px rgba(88,101,242,.9);
+  animation: discordflow 6s ease-in-out infinite, discordglow 2.6s ease-in-out infinite;
+  transition: transform .2s ease, filter .2s ease;
+}
+.discord-btn:hover { transform: translateY(-2px) scale(1.04); filter: brightness(1.12); }
+.discord-btn:active { transform: scale(.98); }
+.discord-btn::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: -70%; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
+  transform: skewX(-20deg); animation: discordshine 3.4s ease-in-out infinite; pointer-events: none;
+}
+@keyframes discordflow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes discordglow { 0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,.22) inset, 0 8px 28px -8px rgba(88,101,242,.9); } 50% { box-shadow: 0 0 0 1px rgba(255,255,255,.3) inset, 0 8px 36px -2px rgba(0,180,255,.85); } }
+@keyframes discordshine { 0% { left: -70%; } 55%, 100% { left: 130%; } }
+@media (prefers-reduced-motion: reduce) { .discord-btn, .discord-btn::after { animation: none; } }
+
+/* Filtro activo en la fila de cristales de Clips */
+.glass-icon.is-active .glass-icon-label { color: #4efafa; font-weight: 700; text-shadow: 0 0 12px rgba(78,250,250,.55); }
+.glass-icon.is-active { filter: drop-shadow(0 0 14px rgba(78,250,250,.35)); }

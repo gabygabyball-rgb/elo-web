@@ -1,0 +1,39 @@
+=== COMO ESTA ARMADO ===
+Son 3 piezas dentro de la carpeta de tu bot de Elo (elo-bot-3.0):
+  elo-api\   -> la API: lee data\db.json (partidas, tabla) y avisa a la pagina EN VIVO cuando algo cambia
+  web\       -> la pagina
+  web-bot\   -> el BOT NUEVO de la pagina: vigila roles, staff, fotos de perfil y renueva el link de invitacion
+
+Tu bot de Elo no cambia. Las partidas y la tabla salen de su db.json, asi que tiene que correr en esta misma carpeta
+(o copiar su data\db.json aqui). El bot nuevo se encarga de TODO lo de Discord en vivo.
+
+  elo-bot-3.0\
+    data\db.json        <- lo escribe el bot de Elo
+    data\site.json      <- lo escribe el bot nuevo (staff, fotos, invitacion)
+    elo-api\  web\  web-bot\
+    INICIAR-WEB.bat  INICIAR-BOT-WEB.bat
+
+=== PASO 1: crear el bot nuevo (una sola vez) ===
+1. discord.com/developers/applications -> New Application (ej. "Web HaxCoRe").
+2. Menu Bot -> "Reset Token" -> copia el token. (Es secreto, no lo compartas.)
+3. Mismo menu, mas abajo: activa "SERVER MEMBERS INTENT" y guarda. Sin esto no puede ver roles ni fotos.
+4. Menu OAuth2 -> URL Generator -> marca "bot" -> permisos: "View Channels" y "Create Instant Invite".
+5. Abre la URL que te da abajo y agrega el bot a tu servidor.
+
+=== PASO 2: encender ===
+1. Doble clic en INICIAR-BOT-WEB.bat. La primera vez crea web-bot\.env y lo abre:
+   pon WEB_BOT_TOKEN (el token) y GUILD_ID (ID de tu servidor). Guarda y vuelve a abrirlo.
+   Debe decir: "[web-bot] Conectado como ..." y "Sincronizado: ...".
+2. Doble clic en INICIAR-WEB.bat. La primera vez compila la web y crea elo-api\.env:
+   pon GUILD_ID y BOARD_KEY (o DEMO=1 para probar). Guarda y vuelve a abrirlo.
+3. Se abre http://localhost:4000
+
+=== QUE SE ACTUALIZA EN VIVO ===
+- Tabla y partidas (en juego y ultimas jugadas): cuando el bot de Elo guarda algo en db.json.
+- Fotos de perfil, nombres y roles (Creador, Administrador, Elo Admin, Ayudante) y los conteos: cuando cambian en Discord.
+- Link de invitacion: se crea uno nuevo cada 6 horas (dura 24 h), asi nunca caduca.
+- Campeones: salen del propio bot de Elo cuando se hace /reset_season.
+En la tabla veras un punto verde "En vivo". Si dice "Reconectando..." la API esta apagada.
+
+=== BOARD_KEY ===
+Con la API encendida abre http://localhost:4000/api/v1/boards y copia el texto de "key" de tu cola.
